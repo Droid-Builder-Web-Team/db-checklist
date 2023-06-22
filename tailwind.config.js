@@ -1,4 +1,3 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 
@@ -14,7 +13,14 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'roboto': ['Roboto', 'sans-serif'],
+            },
+            boxShadow: {
+                'light-shadow': '8px 8px 10px -3px rgb(50,61,74)',
+                'lighter-shadow': '8px 8px 10px -3px rgb(60,71,78)',
+            },
+            textUnderlineOffset: {
+                'sm': '0.5rem',
             },
         },
     },
