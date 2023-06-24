@@ -16,6 +16,8 @@
     <script src="https://kit.fontawesome.com/dd6bff54df.js" crossorigin="anonymous"></script>
 
     <!-- Scripts -->
+    <wireui:scripts/>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Styles -->
