@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserDroid;
+use App\Models\UserToDo;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +13,23 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $userTodo = UserToDo::where('user_id', auth()->user()->id)
+            ->where('completed', '0')
+            ->whereNull('deleted_at')
+            ->orderBy('created_at', 'desc')
+            ->with(['userDroid', 'userDroid.mainframeDroid'])
+            ->get();
+
+        $userBuilds = UserDroid::where('user_id', auth()->user()->id)
+            ->whereNull('deleted_at')
+            ->orderBy('created_at', 'desc')
+            ->with(['userToDo', 'mainframeDroid'])
+            ->get();
+
+        return view('dashboard', [
+            'userTodo' => $userTodo,
+            'userBuilds' => $userBuilds,
+        ]);
     }
 
     /**

@@ -1,5 +1,3 @@
-<!-- user-todo-list.blade.php -->
-
 <div>
     <!-- Render the user todo items -->
     <h2>User Todo List</h2>

@@ -16,7 +16,8 @@
 }
 
 .custom-list li {
-    gap: 0.5rem;
+    gap: 1rem;
+    padding-block: 1rem;
 }
 
 body.modal-open {
@@ -80,7 +81,6 @@ h3 {
 }
 
 .button-wrapper {
-    padding-top: 1rem;
     display: flex;
     gap: 2rem;
 }

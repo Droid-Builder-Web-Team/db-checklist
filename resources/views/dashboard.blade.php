@@ -54,8 +54,10 @@
                                                 (optional):</label>
                                             <div class="w-100">
                                                 <select name="user_droid_id">
-                                                    <option selected>Please select a droid to assign this item to:
+                                                    <option value="" selected>Please select a droid to assign this item
+                                                        to
                                                     </option>
+                                                    <option>Test</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -83,7 +85,29 @@
                                 </div>
                             </div>
 
-                            @livewire('user-todo-list')
+                            <div>
+                                @if(count($userTodo) > 0)
+                                    <ul class="custom-list custom-list--user-todo text-center">
+                                        @foreach ($userTodo as $todoItem)
+                                            <li class="grid grid-cols-3 items-center justify-evenly even:bg-gray-600 odd:bg-gray-800">
+                                                <span class="list-item">{{ $todoItem->text }}</span>
+                                                @if($todoItem->user_droid_id)
+                                                    <span>{{$todoItem->user_droid->mainframe_droid->name}}</span>
+                                                @else
+                                                    <span>Not assigned to a build</span>
+                                                @endif
+                                                <div class="button-wrapper flex flex-row justify-center gap-4">
+                                                    <button wire:click="completeTodoItem(1)">
+                                                        <i class="fa-solid fa-square-check transition-colors text-2xl hover:text-green-500"></i>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <div><p class="text-center">Hurray! You have nothing to do!</p></div>
+                                @endif
+                            </div>
 
                         </div>
                     </div>
@@ -104,16 +128,16 @@
             text: itemDescription
         };
 
+        console.log("User authenticated:", {{ auth()->check() }});
+
         // Send the AJAX request
         axios.post('/api/todo/store', payload)
             .then(response => {
                 if (response.status === 201) {
+                    console.log('yes');
                     // Clear the input values
                     document.querySelector('select[name="user_droid_id"]').value = '';
                     document.querySelector('textarea[name="text"]').value = '';
-
-                    // Emit an event to notify the component that an item was added
-                    Livewire.emit('item-added');
 
                     // Fetch the updated user todo list
                     Livewire.emit('fetchUserTodo');
@@ -121,6 +145,8 @@
                     // Show a success notification
                     showSuccessNotification();
 
+                    // Call the closeModal() method in the Livewire component
+                    Livewire.emit('closeModal');
                 }
             })
             .catch(error => {
@@ -129,10 +155,6 @@
             });
     }
 
-    function closeModal() {
-        let modalVisible = false;
-        let open = false;
-    }
 
     function showSuccessNotification() {
         const notification = window.$wireui.notify({
@@ -140,7 +162,6 @@
             description: 'Your item was successfully added.',
             icon: 'success'
         });
-
     }
 
     function showFailureNotification(error) {

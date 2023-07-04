@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\UserDroid;
 use App\Models\UserToDo;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class UserTodoList extends Component
@@ -13,20 +14,20 @@ class UserTodoList extends Component
     public $state;
     public $newItemDescription;
 
+    protected $listeners = ['closeModal'];
+
+
     public function completeTodoItem($todoItemId)
     {
         $todoItem = UserToDo::findOrFail($todoItemId);
         $todoItem->completed = true;
         $todoItem->save();
-
-        // Perform any other necessary actions
-
-        // Re-render the component
         $this->render();
     }
 
     public function render()
     {
+        $userId = auth()->user()->id;
         $userTodo = UserToDo::where('user_id', auth()->user()->id)
             ->where('completed', '0')
             ->whereNull('deleted_at')
@@ -40,32 +41,27 @@ class UserTodoList extends Component
             ->with(['userToDo', 'mainframeDroid'])
             ->get();
 
-        return view('livewire.user-todo-list', [
-            'userTodo' => $userTodo,
-            'userBuilds' => $userBuilds,
-        ]);
+        return view('livewire.user-todo-list');
     }
 
-    public function saveNewItem()
+    public function store(Request $request)
     {
-        // Validation if required
-        $this->validate([
-            'newItemDescription' => 'required|string',
+        // Validate the request data
+        $validatedData = $request->validate([
+            'user_droid_id' => 'nullable',
+            'text' => 'required',
         ]);
 
-        // Save the new item to the database
-        $userTodo = new UserToDo();
-        $userTodo->user_id = auth()->user()->id;
-        $userTodo->description = $this->newItemDescription;
-        $userTodo->completed = false;
-        $userTodo->save();
+        $todoItem = new UserToDo();
+        $todoItem->user_id = auth()->user()->id;
+        $todoItem->user_droid_id = $validatedData['user_droid_id'];
+        $todoItem->text = $validatedData['text'];
+        $todoItem->save();
 
-        // Clear the input field and close the modal
-        $this->newItemDescription = '';
-        $this->closeModal();
+        // Emit an event to notify the component that a new item was added
+        $this->emit('item-added');
 
-        // Refresh the user todo list
-        $this->fetchUserTodo();
+        return response()->json($todoItem, 201);
     }
 
     public function closeModal()
