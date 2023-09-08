@@ -28,7 +28,7 @@
         <div
           class="overflow-hidden bg-white p-6 text-center shadow-light-shadow transition duration-500 hover:shadow-lighter-shadow dark:bg-gray-800 sm:rounded-lg">
           <div class="text-xl text-white">
-            Total Users: 1
+            Total Users: {{ $userCount }}
           </div>
         </div>
         <div
