@@ -17,10 +17,13 @@ class AdminController extends Controller
         $userCount = User::whereNull('deleted_at')->count();
         $buildCount = UserDroid::whereNull('deleted_at')->count();
         $droidCount = MainframeDroid::whereNull('deleted_at')->count();
+
+        $users = User::whereNull('deleted_at')->get();
         return view('admin/admin', [
             'userCount' => $userCount,
             'buildCount' => $buildCount,
-            'droidCount' => $droidCount
+            'droidCount' => $droidCount,
+            'users' => $users
         ]);
     }
 

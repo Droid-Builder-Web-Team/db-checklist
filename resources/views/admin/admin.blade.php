@@ -47,12 +47,15 @@
     </div>
   </div>
 
+
+
   <div class="py-6">
     <div class="mx-auto max-w-7xl sm:px-2 lg:px-4">
       <div class="pb-2 text-4xl uppercase text-white">Users</div>
       <div
         class="overflow-hidden bg-white p-6 text-center shadow-light-shadow transition duration-500 hover:shadow-lighter-shadow dark:bg-gray-800 sm:rounded-lg">
-        <table class="w-100 table-auto border-collapse border text-white">
+        <livewire:users-table theme="tailwind" />
+        {{-- <table class="w-100 table-auto border-collapse border text-white">
           <thead>
             <tr>
               <th class="border">User</th>
@@ -84,7 +87,7 @@
 
             </tr>
           </tbody>
-        </table>
+        </table> --}}
       </div>
     </div>
 </x-app-layout>
