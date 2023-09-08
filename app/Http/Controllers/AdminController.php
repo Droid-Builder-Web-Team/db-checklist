@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MainframeDroid;
 use App\Models\User;
+use App\Models\UserDroid;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,8 +15,12 @@ class AdminController extends Controller
     public function index()
     {
         $userCount = User::whereNull('deleted_at')->count();
+        $buildCount = UserDroid::whereNull('deleted_at')->count();
+        $droidCount = MainframeDroid::whereNull('deleted_at')->count();
         return view('admin/admin', [
-            'userCount' => $userCount
+            'userCount' => $userCount,
+            'buildCount' => $buildCount,
+            'droidCount' => $droidCount
         ]);
     }
 

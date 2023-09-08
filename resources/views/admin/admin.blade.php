@@ -34,13 +34,13 @@
         <div
           class="overflow-hidden bg-white p-6 text-center shadow-light-shadow transition duration-500 hover:shadow-lighter-shadow dark:bg-gray-800 sm:rounded-lg">
           <div class="text-xl text-white">
-            User Droids: 1
+            Total Builds: {{ $buildCount }}
           </div>
         </div>
         <div
           class="overflow-hidden bg-white p-6 text-center shadow-light-shadow transition duration-500 hover:shadow-lighter-shadow dark:bg-gray-800 sm:rounded-lg">
           <div class="text-xl text-white">
-            Total Droids: 1
+            Total Droids: {{ $droidCount }}
           </div>
         </div>
       </div>
