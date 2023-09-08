@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-//use App\Models\UserDroid;
+use App\Models\UserDroid;
 use App\Models\UserToDo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,9 +55,15 @@ class ToDoController extends Controller
         $newTodoItem->user_id = Auth::id();
         $newTodoItem->user_droid_id = $validated['todoItem']['user_droid_id'] ?: null;
         $newTodoItem->text = $validated['todoItem']['text'];
+
+        dd('it hits controller');
         $newTodoItem->save();
 
-        return $newTodoItem;
+        // Emit an event to notify the component that a new item was added
+        $this->emit('item-added');
+
+
+        return response()->json($newTodoItem, 201);
     }
 
     /**

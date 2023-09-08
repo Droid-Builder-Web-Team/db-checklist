@@ -13,11 +13,11 @@ class UserTodoList extends Component
     public $modalVisible = false;
     public $state;
     public $newItemDescription;
-
     protected $listeners = ['closeModal'];
+    public $userTodo;
+    public $userBuilds;
 
-
-    public function completeTodoItem($todoItemId)
+    public function update($todoItemId)
     {
         $todoItem = UserToDo::findOrFail($todoItemId);
         $todoItem->completed = true;
@@ -25,24 +25,34 @@ class UserTodoList extends Component
         $this->render();
     }
 
-    public function render()
-    {
-        $userId = auth()->user()->id;
-        $userTodo = UserToDo::where('user_id', auth()->user()->id)
-            ->where('completed', '0')
-            ->whereNull('deleted_at')
-            ->orderBy('created_at', 'desc')
-            ->with(['userDroid', 'userDroid.mainframeDroid'])
-            ->get();
 
-        $userBuilds = UserDroid::where('user_id', auth()->user()->id)
-            ->whereNull('deleted_at')
-            ->orderBy('created_at', 'desc')
-            ->with(['userToDo', 'mainframeDroid'])
-            ->get();
+public function render()
+{
+    $userId = auth()->user()->id;
+    
+    // Fetch user todo items and user builds
+    $userTodo = UserToDo::where('user_id', $userId)
+        ->where('completed', '0')
+        ->whereNull('deleted_at')
+        ->orderBy('created_at', 'desc')
+        ->with(['userDroid', 'userDroid.mainframeDroid'])
+        ->get();
 
-        return view('livewire.user-todo-list');
-    }
+    $userBuilds = UserDroid::where('user_id', $userId)
+        ->whereNull('deleted_at')
+        ->orderBy('created_at', 'desc')
+        ->with(['userToDo', 'mainframeDroid'])
+        ->get();
+
+    // Set the fetched data to component properties
+    $this->userTodo = $userTodo;
+    $this->userBuilds = $userBuilds;
+
+    return view('livewire.user-todo-list', [
+        'userTodo' => $userTodo,
+        'userBuilds' => $userBuilds,
+    ]);
+}
 
     public function store(Request $request)
     {
@@ -59,7 +69,7 @@ class UserTodoList extends Component
         $todoItem->save();
 
         // Emit an event to notify the component that a new item was added
-        $this->emit('item-added');
+        // $this->emit('closeModal');
 
         return response()->json($todoItem, 201);
     }
@@ -68,5 +78,16 @@ class UserTodoList extends Component
     {
         $this->modalVisible = false;
         $this->open = false;
+    }
+
+    public function fetchUserTodo()
+    {
+        dd('it hits the function');
+        $this->userTodo = UserToDo::where('user_id', auth()->user()->id)
+            ->where('completed', '0')
+            ->whereNull('deleted_at')
+            ->orderBy('created_at', 'desc')
+            ->with(['userDroid', 'userDroid.mainframeDroid'])
+            ->get();
     }
 }

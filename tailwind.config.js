@@ -28,6 +28,11 @@ export default {
             textUnderlineOffset: {
                 'sm': '0.5rem',
             },
+            colors: {
+                blue: {
+                    'background-med': '#012B4C',
+                }
+            },
         },
     },
 

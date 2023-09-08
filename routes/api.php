@@ -22,6 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth')->get('/todo-list', UserTodoList::class)->name('todo-list');
 Route::middleware('auth')->prefix('/todo')->group(function () {
     Route::post('/store', [UserTodoList::class, 'store'])->name('todo.store');
-    Route::put('/{todoItemId}', [UserTodoList::class, 'update'])->name('todo.update');
+    Route::put('/update/{todoItemId}', [UserTodoList::class, 'update'])->name('todo.update');
     Route::delete('/{todoItemId}', [UserTodoList::class, 'destroy'])->name('todo.destroy');
 });

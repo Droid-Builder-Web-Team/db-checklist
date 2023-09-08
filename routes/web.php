@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MainframeDroidController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +21,5 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-
+Route::middleware('auth')->get('mainframe_list', [MainframeDroidController::class, 'index'])->name('mainframe_list');
+Route::middleware('auth')->get('admin', [AdminController::class, 'index'])->name('admin_dashboard');
