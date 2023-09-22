@@ -1,27 +1,30 @@
-import './bootstrap';
+import "./bootstrap";
+import {
+    Livewire,
+    Alpine,
+} from "../../vendor/livewire/livewire/dist/livewire.esm";
+import Clipboard from "@ryangjchandler/alpine-clipboard";
+import focus from "@alpinejs/focus";
 
-import Alpine from 'alpinejs';
-import focus from '@alpinejs/focus';
-
-window.Alpine = Alpine;
-
+Alpine.plugin(Clipboard);
 Alpine.plugin(focus);
-
-Alpine.start();
+Livewire.start();
 
 // Check if the user prefers dark mode
-const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const prefersDarkMode = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+).matches;
 
 // Get the root HTML element
 const root = document.documentElement;
 
 // Function to enable or disable dark mode
 function enableDarkMode() {
-    root.classList.add('dark');
+    root.classList.add("dark");
 }
 
 function disableDarkMode() {
-    root.classList.remove('dark');
+    root.classList.remove("dark");
 }
 
 // Set the initial dark mode state based on user preference
@@ -32,10 +35,12 @@ if (prefersDarkMode) {
 }
 
 // Listen for changes in user preference
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (e.matches) {
-        enableDarkMode();
-    } else {
-        disableDarkMode();
-    }
-});
+window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (e) => {
+        if (e.matches) {
+            enableDarkMode();
+        } else {
+            disableDarkMode();
+        }
+    });

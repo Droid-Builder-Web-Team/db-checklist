@@ -7,9 +7,9 @@
 
 <div x-data="{
     @if ($component->isFilterLayoutSlideDown()) filtersOpen: $wire.filterSlideDownDefaultVisible, @endif
-    paginationCurrentCount: $wire.entangle('paginationCurrentCount'),
-    paginationTotalItemCount: $wire.entangle('paginationTotalItemCount'),
-    paginationCurrentItems: $wire.entangle('paginationCurrentItems'),
+    paginationCurrentCount: $wire.$entangle('paginationCurrentCount', true),
+    paginationTotalItemCount: $wire.$entangle('paginationTotalItemCount', true),
+    paginationCurrentItems: $wire.$entangle('paginationCurrentItems', true),
     alwaysShowBulkActions: {{ $component->getHideBulkActionsWhenEmptyStatus() ? 'false' : 'true' }},
     selectedItems: $wire.entangle('selected').defer,
     @if ($component->showBulkActionsDropdownAlpine())

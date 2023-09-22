@@ -69,7 +69,7 @@ public function render()
         $todoItem->save();
 
         // Emit an event to notify the component that a new item was added
-        // $this->emit('closeModal');
+        // $this->dispatch('closeModal');
 
         return response()->json($todoItem, 201);
     }

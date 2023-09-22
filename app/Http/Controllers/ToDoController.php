@@ -60,7 +60,7 @@ class ToDoController extends Controller
         $newTodoItem->save();
 
         // Emit an event to notify the component that a new item was added
-        $this->emit('item-added');
+        $this->dispatch('item-added');
 
 
         return response()->json($newTodoItem, 201);

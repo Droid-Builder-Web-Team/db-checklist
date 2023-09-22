@@ -10,9 +10,11 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 class UsersTable extends DataTableComponent
 {
     protected $model = User::class;
+    public $id;
 
     public function configure(): void
     {
+        $this->setAdditionalSelects(['users.id as id']);
         $this->setPrimaryKey('id');
     }
 

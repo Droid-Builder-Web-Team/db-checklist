@@ -11,12 +11,15 @@
     @endif
         @if ($theme === 'tailwind')
         <div class="rounded-md shadow-sm">
-            <select
-                wire:model.stop="{{ $tableName }}.filters.{{ $filter->getKey() }}"
+            <select multiple
+                wire:model.live.stop="{{ $tableName }}.filters.{{ $filter->getKey() }}"
                 wire:key="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
                 id="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
-                class="block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                class="block w-full transition duration-150 ease-in-out border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-800 dark:text-white dark:border-gray-600"
             >
+            @if ($filter->getFirstOption() != "")
+                <option @if($filter->isEmpty($this)) selected @endif value="all">{{ $filter->getFirstOption()}}</option>
+            @endif
                 @foreach($filter->getOptions() as $key => $value)
                     @if (is_iterable($value))
                         <optgroup label="{{ $key }}">
@@ -31,12 +34,15 @@
             </select>
         </div>
     @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-        <select
-            wire:model.stop="{{ $tableName }}.filters.{{ $filter->getKey() }}"
+        <select multiple
+            wire:model.live.stop="{{ $tableName }}.filters.{{ $filter->getKey() }}"
             wire:key="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
             id="{{ $tableName }}-filter-{{ $filter->getKey() }}@if($filter->hasCustomPosition())-{{ $filter->getCustomPosition() }}@endif"
             class="{{ $theme === 'bootstrap-4' ? 'form-control' : 'form-select' }}"
         >
+        @if ($filter->getFirstOption() != "")
+            <option @if($filter->isEmpty($this)) selected @endif value="all">{{ $filter->getFirstOption()}}</option>
+        @endif
             @foreach($filter->getOptions() as $key => $value)
                 @if (is_iterable($value))
                     <optgroup label="{{ $key }}">
@@ -49,5 +55,5 @@
                 @endif
             @endforeach
         </select>
-    @endif
+  @endif
 </div>

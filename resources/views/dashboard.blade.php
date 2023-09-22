@@ -12,7 +12,6 @@
       <div
         class="overflow-hidden bg-white text-center shadow-light-shadow transition duration-500 hover:shadow-lighter-shadow dark:bg-gray-800 sm:rounded-lg">
         @livewire('greeting-message')
-
         <div class="p-6 text-gray-900 dark:text-gray-100">
           @livewire('quotes-api')
         </div>
@@ -189,7 +188,7 @@
   function fetchUserTodoDebouncedWrapper() {
     clearTimeout(fetchUserTodoDebounced);
     fetchUserTodoDebounced = setTimeout(() => {
-      window.livewire.emit('fetchUserTodo');
+      window.livewire.dispatch('fetchUserTodo');
     }, 300); // Adjust the debounce delay as needed
   }
 
