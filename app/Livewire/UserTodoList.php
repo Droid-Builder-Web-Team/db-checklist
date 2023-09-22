@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\UserDroid;
 use App\Models\UserToDo;
@@ -82,7 +82,6 @@ public function render()
 
     public function fetchUserTodo()
     {
-        dd('it hits the function');
         $this->userTodo = UserToDo::where('user_id', auth()->user()->id)
             ->where('completed', '0')
             ->whereNull('deleted_at')

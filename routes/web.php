@@ -1,10 +1,11 @@
 <?php
 
+use App\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Livewire\NewDroidRegistration;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MainframeDroidController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +27,6 @@ Route::middleware('auth')->get('mainframe_list', [MainframeDroidController::clas
 Route::middleware('auth')->get('admin', [AdminController::class, 'index'])->name('admin_dashboard');
 Route::middleware('auth')->prefix('admin/droids')->group(function() {
     Route::get('/create', [AdminController::class, 'createDroid'])->name('create_droid');
-    // Route::post('/store', [NewDroidRegistration::class, 'storeDroid'])->name('store_droid');
+    Route::get('/droid-management', [AdminController::class, 'droidManagement'])->name('droid_management');
 });
+Route::get('/counter', Counter::class);

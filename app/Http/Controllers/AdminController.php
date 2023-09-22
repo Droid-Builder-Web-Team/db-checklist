@@ -19,7 +19,7 @@ class AdminController extends Controller
         $droidCount = MainframeDroid::whereNull('deleted_at')->count();
 
         $users = User::whereNull('deleted_at')->get();
-        return view('admin/admin', [
+        return view('admin', [
             'userCount' => $userCount,
             'buildCount' => $buildCount,
             'droidCount' => $droidCount,
@@ -33,6 +33,11 @@ class AdminController extends Controller
     public function createDroid()
     {
         return view('admin/droids/create-droid');
+    }
+
+    public function droidManagement()
+    {
+        return view('admin/droids/droid-management');
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Livewire\UserTodoList;
+use App\Livewire\UserTodoList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
